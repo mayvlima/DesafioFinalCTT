@@ -1,6 +1,7 @@
 package usuario.aplicacao;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 import usuario.metodos.UsuarioMetodos;
@@ -23,77 +24,101 @@ public class Main {
 			switch (r) {
 			case 1:				
 				setUsuario();
-				usuarioMetodos.save(usuario);
+				usuarioMetodos.save(usuario);				
 				usuario.setId(usuarioMetodos.getLastId());
-				verCadastro();
+				usuarioMetodos.getUsuarioWithId(usuario);
+				System.out.println("\n--------------------------------");
+				System.out.println(usuario);
+				System.out.println("\n--------------------------------");
 				
-				continuar = continuar("\nDeseja retornar ao menu?", "1 - SIM", "2 - NÃO");
+				continuar = pergunta("\nDeseja retornar ao menu?", "1 - SIM", "2 - NÃO");
 				
 				break;
 				
 			case 2:
-				int a = continuar("\nO que você deseja fazer?","1 - Procurar usuário por ID ", "2 - Ver todos os cadastros");
-								
-				if(a == 1) {
-					do {
-					System.out.println("\nDigite o ID do registro que deseja visualizar:");
-					usuario.setId(scInt.nextInt());
-					
-					if(usuarioMetodos.getUsuarioWithId(usuario)) {						
-						verCadastro();
-					}else {
-						System.out.println("\nESCOLHA UM ID VÁLIDO!");
-					}
-					}while(!usuarioMetodos.getUsuarioWithId(usuario));
-					
-				}else if(a == 2) {
-					verTodosCadastros();
-				}else {
-					System.out.println("Escolha uma opção disponível!");
-				}
+				int i;
 				
-				continuar = continuar("\nDeseja retornar ao menu?", "1 - SIM", "2 - NÃO");
+				do {
+					System.out.println("\nO que você deseja fazer?");
+					System.out.println("1 - Procurar usuário por ID ");
+					System.out.println("2 - Procurar usuário por Nome ");
+					System.out.println("3 - Ver todos os cadastros");
+					i = scInt.nextInt();
+					if(i!=1 && i!=2 && i!=3) {
+						System.out.println("\nESCOLHA UMA OPÇÃO VÁLIDA!\n");
+					}
+				}while(i!=1 && i!=2 && i!=3);
+				
+				if(i == 1) {
+				System.out.println("");	
+				setIdDesejado();
+				
+				}else if(i == 2) {
+					
+					receberDado("Nome");
+					List<Usuario> usuarios = usuarioMetodos.getUsuarioWithName(usuario); 
+					if(usuarios.isEmpty()) {
+						System.out.println("\nNENHUM USUÁRIO COM ESSE NOME ECONTRADO!");
+					}else {
+						System.out.println("\nO RESULTADO DA BUSCA FOI:");
+						for(Usuario u : usuarios) {						
+							System.out.println(u);
+							System.out.println("\n--------------------------------");
+						}	
+					}					
+					
+				}else if(i == 3){
+					System.out.println("\nLISTA DE USUÁRIOS");
+					verTodosCadastros();
+				}				
+				
+				continuar = pergunta("\nDeseja retornar ao menu?", "1 - SIM", "2 - NÃO");
 				
 				break;
 				
 			case 3:
-				int b = continuar("\nDeseja ver a lista de cadastros antes?", "1 - SIM", "2 - NÃO");
+				int b = pergunta("\nDeseja ver a lista de cadastros antes?", "1 - SIM", "2 - NÃO");
 				
 				if(b == 1){
 					verCadastrosSimples();
-					int c = setIdDesejado();
+					setIdDesejado();					
+					int c = pergunta("Esse é o cadastro desejado?", "1 - SIM", "2 - NÃO");
 					
 					if(c== 1) {
 						atualizar();							
 						System.out.println("\nUSUÁRIO ATUALIZADO COM SUCESSO!");
-						verCadastro();						
+						System.out.println(usuario);
+						System.out.println("\n--------------------------------");
 							
 					}else {
-						System.out.println("\nAtulização de cadastro cancelada!");
+						System.out.println("\nATUALIZAÇÃO DE CADASTRO CANCELADA!");
 					}
 				}else {
-					int c = setIdDesejado();
+					setIdDesejado();
+					int c = pergunta("Esse é o cadastro desejado?", "1 - SIM", "2 - NÃO");
 					
-					if(c== 1) {
+					if( c == 1) {
 						atualizar();						
 						System.out.println("\nUSUÁRIO ATUALIZADO COM SUCESSO!");		
-						verCadastro();					
+						System.out.println(usuario);
+						System.out.println("\n--------------------------------");			
 					}else {
 						System.out.println("\nAtulização de cadastro cancelada!");
 					}
 				}						
 				
-				continuar = continuar("\nDeseja retornar ao menu?", "1-SIM", "2-NÃO");
+				continuar = pergunta("\nDeseja retornar ao menu?", "1-SIM", "2-NÃO");
 				
 				break;
 				
 			case 4:
 				
-				int d = continuar("\nDeseja ver a lista de cadastro antes?", "1-SIM", "2-NÃO");
+				int d = pergunta("\nDeseja ver a lista de cadastro antes?", "1-SIM", "2-NÃO");
 				
 				if(d == 1){
 					verCadastrosSimples();
-					int e  = setIdDesejado();					
+					setIdDesejado();
+					int e = pergunta("Esse é o cadastro desejado?", "1 - SIM", "2 - NÃO");
 						if(e == 1) {							
 							usuarioMetodos.delete(usuario);	
 						}else {
@@ -101,7 +126,8 @@ public class Main {
 						}
 					
 				}else {
-					int e  = setIdDesejado();					
+					setIdDesejado();
+					int e = pergunta("Esse é o cadastro desejado?", "1 - SIM", "2 - NÃO");				
 					if(e == 1) {					
 						usuarioMetodos.delete(usuario);					
 					}else {
@@ -109,13 +135,12 @@ public class Main {
 					}
 				}	
 				
-				continuar = continuar("\nDeseja retornar ao menu?", "1 - SIM", "2 - NÃO");
+				continuar = pergunta("\nDeseja retornar ao menu?", "1 - SIM", "2 - NÃO");
 				break;
 				
 			case 5:
 				continuar = 2;
-				break;	
-				
+				break;			
 			}		
 				
 			
@@ -134,7 +159,7 @@ public class Main {
 			
 			System.out.println("\nO que você deseja fazer?");
 			System.out.println("1 - Cadastrar novo usuário");
-			System.out.println("2 - Procurar cadastro");
+			System.out.println("2 - Procurar um cadastro");
 			System.out.println("3 - Atualizar um cadastro");
 			System.out.println("4 - Deletar um cadastro");
 			System.out.println("5 - Sair");
@@ -148,7 +173,7 @@ public class Main {
 		return i;
 	}
 	
-	public static int continuar(String frase1, String frase2, String frase3) {		
+	public static int pergunta(String frase1, String frase2, String frase3) {		
 		int i;
 		do {
 			System.out.println(frase1);
@@ -163,119 +188,90 @@ public class Main {
 		return i;
 	}
 	
-	public static void receberNome() {
-		String nome = "";
+	public static void receberDado(String string) {
+		String dado;
 		do {
-			System.out.println("\nDigite o nome: ");			
-			nome = sc.nextLine();				
-			if(nome.trim().equals("")) {
-				System.out.println("Digite um nome válido!\n");
+			System.out.println("\nDigite o " + string.toLowerCase() + ":");			
+			dado = sc.nextLine();				
+			if(dado.trim().equals("")) {
+				System.out.println("DIGITE UM " +string.toUpperCase() + " VÁLIDO!\n");
 			}else {
-				usuario.setNome(nome);
+				if(string.equals("Nome")) {
+					usuario.setNome(dado);
+				}else if (string.equals("Email")){
+					usuario.setEmail(dado);
+				}else if (string.equals("Senha")) {
+					usuario.setSenha(dado);
+				}
 			}	
 			
-			}while(nome.trim().equals(""));		
-		
-	}
-	
-	public static void receberEmail() {
-		String email = "";
-		do {
-			System.out.println("\nDigite o email: ");
-			email = sc.nextLine();		
-			if(email.trim().equals("")) {
-				System.out.println("Digite um email válido!\n");
-			}else {
-				usuario.setEmail(email);
-			}	
-			
-			}while(email.trim().equals(""));
-	}
-	
-	public static void receberSenha() {
-		String senha = "";
-		do {
-			System.out.println("\nDigite o senha: ");
-			senha = sc.nextLine();		
-			if(senha.trim().equals("")) {
-				System.out.println("Digite uma senha válido!\n");
-			}else {
-				usuario.setSenha(senha);
-			}	
-			
-			}while(senha.trim().equals(""));
+			}while(dado.trim().equals(""));			
 	}
 	
 	public static void dataAtual() {
 		usuario.setDataCadastro(new java.sql.Timestamp(java.util.Calendar.getInstance().getTimeInMillis()));
 	}
 	
-	
-	
 	public static void setUsuario() {
-		receberNome();
-		receberEmail();
-		receberSenha();
+		receberDado("Nome");
+		receberDado("Email");
+		receberDado("Senha");
 		dataAtual();
-	}
+	}		
 	
-	public static int setIdDesejado() {
+	public static void setIdDesejado() {
 		do {
-			System.out.println("\nDigite o ID do registro desejado:");
+			usuario = new Usuario();
+			System.out.println("\nDigite o ID do registro desejado:");			
 			usuario.setId(scInt.nextInt());
 			
-			if(usuarioMetodos.getUsuarioWithId(usuario)) {		
-			verCadastro();
-			System.out.println("\nEsse é o cadastro desejado: ");
+			usuario = usuarioMetodos.getUsuarioWithId(usuario);
+			
+			if(usuario != null) {
+				System.out.println("\n--------------------------------");
+				System.out.println(usuario);
+				System.out.println("\n--------------------------------");
 			}else {
 				System.out.println("\nESCOLHA UM ID VÁLIDO!");
 			}
-		}while(!usuarioMetodos.getUsuarioWithId(usuario));
-		int r = continuar("\nDigite:", "1-SIM", "2-NÃO");
-		return r;
+		}while(usuario == null);		
 	}
 	
 	public static void atualizar() {
-		int r = continuar("\nDeseja atualizar o nome?","1 - SIM","2 - NÃO");
+		int r = pergunta("\nDeseja atualizar o nome?","1 - SIM","2 - NÃO");
 		if(r == 1) {
-		receberNome();
-		usuarioMetodos.updateNome(usuario);
+		receberDado("Nome");
+		usuarioMetodos.update(usuario, "Nome");
 		}
 		
-		r = continuar("\nDeseja atualizar o email?","1 - SIM","2 - NÃO");
+		r = pergunta("\nDeseja atualizar o email?","1 - SIM","2 - NÃO");
 		if(r == 1) {
-		receberEmail();
-		usuarioMetodos.updateEmail(usuario);
+		receberDado("Email");
+		usuarioMetodos.update(usuario, "Email");
 		}
 		
-		r = continuar("\nDeseja atualizar o senha?","1 - SIM","2 - NÃO");
+		r = pergunta("\nDeseja atualizar o senha?","1 - SIM","2 - NÃO");
 		if(r == 1) {
-		receberSenha();
-		usuarioMetodos.updateSenha(usuario);
+		receberDado("Senha");
+		usuarioMetodos.update(usuario,"Senha");
 		}
 	}
 	
 	public static void verTodosCadastros() {
 		usuarioMetodos.getUsuarios();
 		for(Usuario u : usuarioMetodos.getUsuarios()) {						
-			System.out.println(u.toString());
+			System.out.println(u);
 			System.out.println("\n--------------------------------");
 		}
 	}
+	
 	public static void verCadastrosSimples() {
-		usuarioMetodos.getUsuarioWithId(usuario);
+		usuarioMetodos.getUsuarios();
 		for(Usuario u : usuarioMetodos.getUsuarios()) {	
 			System.out.println("--------------------------------");
-			System.out.println("ID = "+u.getId()+": " + u.getNome());
-			
+			System.out.println("ID: " + u.getId() + " - " + u.getNome());			
 		}
 	}
-	public static Usuario verCadastro() {		
-		usuarioMetodos.getUsuarioWithId(usuario);
-		System.out.println("\n--------------------------------");
-		System.out.println(usuario.toString());
-		System.out.println("\n--------------------------------");
-		return usuario;
-	}
+	
 	
 }
