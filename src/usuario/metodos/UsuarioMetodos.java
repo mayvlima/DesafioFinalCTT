@@ -153,32 +153,26 @@ public class UsuarioMetodos {
 		}
 		
 	
-	}
+	}	
 	
-	public int update(Usuario usuario) {
+	public int updateNome(Usuario usuario) {
 		
-		String sql = "UPDATE usuarios SET Nome = ?, Email = ?, Senha = ? WHERE ID = ?";
+		String sql = "UPDATE usuarios SET Nome = ? WHERE ID = ?";
 		
 		Connection conn = null;
 		
 		PreparedStatement pstm = null;
 		
-		int i = 0;
-		
+		int i = 0;		
 		
 		try {
-			conn = Conexao.createConnectionToMySql();		
-	
+			conn = Conexao.createConnectionToMySql();	
 			
 			pstm = conn.prepareStatement(sql);
-			pstm.setString(1, usuario.getNome());
-			pstm.setString(2, usuario.getEmail());
-			pstm.setString(3, usuario.getSenha());
-			pstm.setInt(4, usuario.getId());			
+			pstm.setString(1, usuario.getNome());			
+			pstm.setInt(2, usuario.getId());			
 			
-			i = pstm.executeUpdate();		
-			
-			System.out.println("\nUSUÁRIO ATUALIZADO COM SUCESSO!");			
+			i = pstm.executeUpdate();				
 			
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -199,6 +193,87 @@ public class UsuarioMetodos {
 		
 		return i;
 	}
+	
+	
+	public int updateEmail(Usuario usuario) {
+	
+		String sql = "UPDATE usuarios SET Email = ? WHERE ID = ?";
+	
+		Connection conn = null;
+	
+		PreparedStatement pstm = null;
+	
+		int i = 0;		
+	
+			try {
+				conn = Conexao.createConnectionToMySql();	
+		
+				pstm = conn.prepareStatement(sql);
+				pstm.setString(1, usuario.getEmail());			
+				pstm.setInt(2, usuario.getId());			
+		
+				i = pstm.executeUpdate();		
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+		
+	
+			}finally {
+		
+				try {
+					if(pstm != null) {
+						pstm.close();
+					}if(conn != null) {
+						conn.close();
+					}
+				}catch (Exception e2) {
+					e2.printStackTrace();
+				}	
+			}
+	
+			return i;
+	}
+
+	public int updateSenha(Usuario usuario) {
+	
+		String sql = "UPDATE usuarios SET Senha = ? WHERE ID = ?";
+	
+		Connection conn = null;
+	
+		PreparedStatement pstm = null;
+	
+		int i = 0;		
+	
+		try {
+			conn = Conexao.createConnectionToMySql();	
+		
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, usuario.getSenha());			
+			pstm.setInt(2, usuario.getId());			
+		
+			i = pstm.executeUpdate();				
+		
+		}catch (Exception e) {
+		e.printStackTrace();
+		
+	
+		}finally {
+		
+			try {
+				if(pstm != null) {
+					pstm.close();
+				}if(conn != null) {
+					conn.close();
+			}
+		}catch (Exception e2) {
+			e2.printStackTrace();
+		}	
+	}
+	
+		return i;
+	}
+	
+	
 	
 	public int delete(Usuario usuario) {
 		String sql = "DELETE FROM usuarios WHERE ID = ?";

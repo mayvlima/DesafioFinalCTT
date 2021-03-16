@@ -108,23 +108,48 @@ public class TestesJunit {
 
 	
 	@Test
-	@Ignore
-	public void testUpdate() {	
+	public void testUpdateNome() {	
 		
 		UsuarioMetodos usuarioMetodos = new UsuarioMetodos();		
 		
 		Usuario usuario = new Usuario();
 		
-		usuario.setNome("Lourival Lima");
-		usuario.setEmail("lourival@email.com");
-		usuario.setSenha("1010");		
+		usuario.setNome("Lourival Bernardes");
+			
 		usuario.setId(2);		
 	
-		assertEquals("Erro ao atualizar!",1,usuarioMetodos.update(usuario));
+		assertEquals("Erro ao atualizar!", 1, usuarioMetodos.updateNome(usuario));
 	}
 	
 	@Test
-	@Ignore
+	public void testUpdateEmail() {	
+		
+		UsuarioMetodos usuarioMetodos = new UsuarioMetodos();		
+		
+		Usuario usuario = new Usuario();
+		
+		usuario.setEmail("lourivalb@email.com");
+			
+		usuario.setId(3);		
+	
+		assertEquals("Erro ao atualizar!", 1, usuarioMetodos.updateEmail(usuario));
+	}
+	
+	@Test	
+	public void testUpdateSenha() {	
+		
+		UsuarioMetodos usuarioMetodos = new UsuarioMetodos();		
+		
+		Usuario usuario = new Usuario();
+		
+		usuario.setSenha("ds4d5as45s");
+			
+		usuario.setId(3);		
+	
+		assertEquals("Erro ao atualizar!", 1, usuarioMetodos.updateSenha(usuario));
+	}
+	
+	@Test	
 	public void testDelete() {		
 		UsuarioMetodos usuarioMetodos = new UsuarioMetodos();		
 		
@@ -132,7 +157,7 @@ public class TestesJunit {
 		
 		usuario.setId(41);
 	
-		assertEquals("Erro ao deletar!",1,usuarioMetodos.delete(usuario));
+		assertEquals("Erro ao deletar!", 1, usuarioMetodos.delete(usuario));
 	}
 	
 	@Test
@@ -140,5 +165,7 @@ public class TestesJunit {
 		int resultado = usuarioMetodos.getLastId();
 		assertEquals(35, resultado);
 	}
+	
+	
 	
 }
