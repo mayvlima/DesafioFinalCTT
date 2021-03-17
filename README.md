@@ -16,3 +16,10 @@ Criar um menu onde o usuário irá informar qual a atividade ele deseja em uma b
 4-Excluir (Metódo DELETE)
 
 Além disso criar testes Junit para testar a maior parte do código.
+
+Para testar o código na sua máquina, você deve:
+
+1. Ir na classe Conexao, do pacote usuario.conexao
+2. Colocar o username do seu banco de dados na variável USERNAME (ex: "root")
+3. Colocar a password do seu banco de dados na variável PASSWORD (ex: "1234")
+4. Colocar o URL do seu banco de dados na variável URL (ex: "jdbc:mysql://localhost")
