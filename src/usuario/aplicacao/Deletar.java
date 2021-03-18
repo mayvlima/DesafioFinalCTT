@@ -15,7 +15,7 @@ public class Deletar {
 	public void deletarCadastro() {
 		if(usuarioMetodos.getUsuarios().isEmpty()) {
 			System.out.println("\nA LISTA DE CADASTROS ESTÁ VAZIA!");
-			System.out.println("ADICIONE PELO MENOS UM CADASTRO!");
+			System.out.println("ADICIONE PELO MENOS UM USUÁRIO!");
 		}else {
 			int a = pergunta("\nDeseja ver a lista de cadastros antes?", "1 - SIM", "2 - NÃO");
 			

@@ -18,7 +18,7 @@ public class Atualizar {
 		if(usuarioMetodos.getUsuarios().isEmpty()) {
 			
 			System.out.println("\nA LISTA DE CADASTROS ESTÁ VAZIA!");
-			System.out.println("ADICIONE PELO MENOS UM CADASTRO!");
+			System.out.println("ADICIONE PELO MENOS UM USUÁRIO!");
 			
 		}else {
 			

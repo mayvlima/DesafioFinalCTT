@@ -152,6 +152,58 @@ public class UsuarioMetodos {
 
 		return usuarios;
 	}
+	
+	public List<Usuario> getUsuarioWithSobrenome(Usuario usuario) {
+
+		String sql = "SELECT * FROM usuarios WHERE Nome LIKE ?";
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+
+		try {
+
+			conn = Conexao.createConnectionToMySql();
+
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, "%_"+usuario.getNome() + "%");
+
+			rset = pstm.executeQuery();
+
+			while (rset.next()) {
+
+				usuario = new Usuario();
+
+				usuario.setId(rset.getInt("ID"));
+				usuario.setNome(rset.getString("Nome"));
+				usuario.setEmail(rset.getString("Email"));
+				usuario.setSenha(rset.getString("Senha"));
+				usuario.setDataCadastro(rset.getTimestamp("Data_Cadastro"));
+
+				usuarios.add(usuario);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rset != null) {
+					rset.close();
+				}
+				if (pstm != null) {
+					pstm.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return usuarios;
+	}
 
 	public Usuario getUsuarioWithId(Usuario usuario) {
 

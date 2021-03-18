@@ -18,7 +18,7 @@ public class Procurar {
 		if(usuarioMetodos.getUsuarios().isEmpty()) {
 			
 			System.out.println("\nA LISTA DE CADASTROS ESTÁ VAZIA!");
-			System.out.println("ADICIONE PELO MENOS UM CADASTRO!");
+			System.out.println("ADICIONE PELO MENOS UM USUÁRIO!");
 			
 		} else {
 			
@@ -28,12 +28,13 @@ public class Procurar {
 				System.out.println("\nO que você deseja fazer?");
 				System.out.println("1 - Procurar usuário por ID ");
 				System.out.println("2 - Procurar usuário por Nome ");
-				System.out.println("3 - Ver todos os cadastros");
+				System.out.println("3 - Procurar usuário por Sobrenome");
+				System.out.println("4 - Ver todos os cadastros");
 				i = scInt.nextInt();
-					if (i != 1 && i != 2 && i != 3) {
+					if (i != 1 && i != 2 && i != 3 && i!= 4) {
 						System.out.println("\nESCOLHA UMA OPÇÃO VÁLIDA!\n");
 					}
-			} while (i != 1 && i != 2 && i != 3);
+			} while (i != 1 && i != 2 && i != 3 && i!=4);
 			
 			
 			if(i == 1) {
@@ -101,6 +102,38 @@ public class Procurar {
 			}
 			
 			if(i == 3) {
+				boolean continuar = true;
+				do {											
+					receberDado("Sobrenome");
+					List<Usuario> usuarios = usuarioMetodos.getUsuarioWithSobrenome(usuario);
+					
+					if (usuarios.isEmpty()) {						
+						System.out.println("\nNENHUM USUÁRIO COM ESSE NOME ENCONTRADO!");
+						
+						int c = pergunta("Digite:", "1 - TENTAR NOVAMENTE", "2 - SAIR");
+						
+						if (c == 2) {
+							continuar = false;
+						}
+						
+					} else {
+						System.out.println("\nO RESULTADO DA BUSCA FOI:");
+						
+						for (Usuario u : usuarios) {
+							System.out.println(u);
+							System.out.println("\n--------------------------------");
+						}
+						
+						int d = pergunta("Deseja procurar outro usuário?", "1 - SIM", "2 - NÃO");
+						if(d == 2) {
+							continuar = false;
+						}
+						
+					}
+				}while(continuar == true);
+			}
+						
+			if(i == 4) {
 				List<Usuario> usuarios = usuarioMetodos.getUsuarios();
 				for (Usuario u : usuarios) {
 					System.out.println(u);
@@ -136,11 +169,9 @@ public class Procurar {
 			} else {
 				if (string.equals("Nome")) {
 					usuario.setNome(dado);
-				} else if (string.equals("Email")) {
-					usuario.setEmail(dado);
-				} else if (string.equals("Senha")) {
-					usuario.setSenha(dado);
-				}
+				} else if (string.equals("Sobrenome")) {
+					usuario.setNome(dado);
+				} 
 			}
 
 		} while (dado.trim().equals(""));
