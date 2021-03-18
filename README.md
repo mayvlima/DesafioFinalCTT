@@ -23,4 +23,4 @@ Para testar o código na sua máquina, você deve:
 2. Colocar o username do seu banco de dados na variável USERNAME (ex: "root")
 3. Colocar a password do seu banco de dados na variável PASSWORD (ex: "1234")
 4. Colocar o URL do seu banco de dados na variável URL (ex: "jdbc:mysql://localhost")
-5. Rode a classe Conex�o para saber se a conex�o ocorreu com sucesso
+5. Rode a classe Conexão para saber se a conexão ocorreu com sucesso
