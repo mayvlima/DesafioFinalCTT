@@ -77,7 +77,7 @@ public class Procurar {
 					if (usuarios.isEmpty()) {						
 						System.out.println("\nNENHUM USUÁRIO COM ESSE NOME ENCONTRADO!");
 						
-						int c = pergunta("Digite:", "1 - TENTAR NOVAMENTE", "2 - Sair");
+						int c = pergunta("Digite:", "1 - TENTAR NOVAMENTE", "2 - SAIR");
 						
 						if (c == 2) {
 							continuar = false;
