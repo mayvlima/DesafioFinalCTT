@@ -7,9 +7,9 @@ import java.sql.Statement;
 
 public class Conexao {
 
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "mayara2608";
-	private static final String URL = "jdbc:mysql://localhost";
+	private static final String USERNAME = "";
+	private static final String PASSWORD = "";
+	private static final String URL = "";
 
 	public static Connection createConnectionToMySql() throws SQLException {
 
@@ -33,9 +33,9 @@ public class Conexao {
 	public static void main(String[] args) {
 		try {
 			createConnectionToMySql();
-			System.out.println("Conex„o realizada com sucesso!");
+			System.out.println("Conex√£o realizada com sucesso!");
 		} catch (SQLException e) {
-			System.out.println("N„o foi possivel realizar a conex„o!");
+			System.out.println("N√£o foi possivel realizar a conex√£o!");
 			System.out.println("Verifique os dados digitados!");
 			System.out.println("Erro: " + e);
 		}
